@@ -1,0 +1,15 @@
+# Define the resource group name
+$resourceGroupName = "katiaRG"
+
+# Get all resources in the resource group
+$resources = Get-AzResource -ResourceGroupName $resourceGroupName
+
+# Loop through each resource and delete it
+foreach ($resource in $resources) {
+    $resourceType = $resource.ResourceType
+    $resourceName = $resource.Name
+    Write-Output "Deleting $resourceType '$resourceName'..."
+    Remove-AzResource -ResourceId $resource.ResourceId -Force
+}
+
+Write-Output "All resources in resource group '$resourceGroupName' have been deleted."
